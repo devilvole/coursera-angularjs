@@ -28,12 +28,13 @@
   function ShoppingListCheckOffService() {
     var service = this;
 
+    // dear old Yaakov seems to have a very poor diet - I'll try to improve it!
     var toBuyItems = 
       [{name:'lettuce', quantity:7},
       {name:'radishes', quantity:311},
       {name:'tomatoes', quantity:34},
       {name:'jar of pickles', quantity:1},
-      {name:'toblerone', quantity:11},];
+      {name:'wholemeal bread', quantity:1},];
 
     var boughtItems = [];
 
@@ -45,6 +46,7 @@
       toBuyItems.push(item);
     };
 
+    // docs say that splice should return the removed element
     // service.buyItem = function (itemIndex) {
     //   boughtItems.push( toBuyItems.splice(itemIndex, 1));
     // };
