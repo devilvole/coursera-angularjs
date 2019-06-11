@@ -19,12 +19,12 @@
       <div id="toBuyList" ng-controller='ToBuyController as toBuyList'>
         <div ng-if="toBuyList.items.length!==0">
           <h3>To Buy:</h3>
-        <ol>
+        <ul>
           <li ng-repeat="item in toBuyList.items">
             Buy {{item.quantity}} {{ item.name }}
             <button ng-click="toBuyList.buyItem($index);"><span class="glyphicon glyphicon-ok"></span> Bought</button>
           </li>
-        </ol>
+        </ul>
         </div>
         <div class="emptyMessage" ng-if="toBuyList.items.length===0">Everything is bought!</div>
       </div>
@@ -34,11 +34,11 @@
       <div id="boughtList" ng-controller='AlreadyBoughtController as boughtList'>
         <div ng-if="boughtList.items.length!==0">
           <h3>Already Bought:</h3>
-          <ol>
+          <ul>
             <li ng-repeat="item in boughtList.items">
               Bought {{item.quantity}} {{ item.name }}
             </li>
-          </ol>
+          </ul>
         </div>
         <div class="emptyMessage" ng-if="boughtList.items.length===0">Nothing bought yet.</div>
       </div>
