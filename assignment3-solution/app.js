@@ -13,7 +13,6 @@
           templateUrl: 'foundItems.html',
           scope: {
             list: '<myList',
-            title: '@',
             onRemove: '&'
           }
         };
@@ -25,11 +24,12 @@
     function NarrowItDownController(menuSearchService) {
       var narrow = this;
       var searchTerm="";
-        
-      narrow.items = menuSearchService.getItems();
-      narrow.title = "Narrow down this list:";
+      var found = [];
+
       narrow.narrowItDown = function () {
         menuSearchService.getMatchedMenuItems(narrow.searchTerm).then(function(response) {
+          console.log(response);
+          narrow.found = response;
         })
         .catch(function (error) {
             console.log(error);
@@ -37,29 +37,24 @@
         };
 
         narrow.onRemove = function (itemIndex) {
-          menuSearchService.removeItem(itemIndex);
+          narrow.found.splice(itemIndex, 1);
         };
     }
+
 
     MenuSearchService.$inject = ['$http', 'ApiBasePath'];
     function MenuSearchService($http, ApiBasePath) {
         var service = this;
-        var found = [];
-
-        service.removeItem = function (itemIndex) {
-          found.splice(itemIndex, 1);
-        };
-      
 
         service.getMatchedMenuItems = function (searchTerm) {
-          service.found = [];
+           var found = [];
           return $http({
             method: "GET",
             url: (ApiBasePath + "/menu_items.json")
           }).then(function (response) {
             var i;
             for( i in response.data.menu_items){
-              if(response.data.menu_items[i].description.includes(searchTerm)){
+              if( searchTerm!=="" && response.data.menu_items[i].description.includes(searchTerm)){
                 found.push( { short_name:response.data.menu_items[i].short_name, 
                               name: response.data.menu_items[i].name, 
                               description: response.data.menu_items[i].description  });
@@ -67,10 +62,6 @@
             }
             return found;
           });
-        };
-
-        service.getItems = function () {
-          return found;
         };
     }
     
